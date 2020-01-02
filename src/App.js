@@ -67,7 +67,7 @@ function Car() {
     <WheelF ref={frontWheelRef} x={30} y={100} density={3} />
     <WheelF ref={backWheelRef} x={30} y={100} density={3} />
     <PhysicsObject density={1.5} ref={bodyRef} fromCanvas width={100} height={35} x={160} y={270} fill="violet" />
-    <PhysicsObject fixed angle={-1} density={1.5} fromCanvas width={200} height={18} x={400} y={374} fill="green" />
+    <PhysicsObject fixed angle={-15} density={1.5} fromCanvas width={200} height={18} x={400} y={380} fill="green" />
     <PhysicsObject density={1.5} fromCanvas width={40} height={60} x={500} y={200} fill="green" />
     <button onClick={() => setSpeed(360 * 15 * (Math.PI / 180) * (-1))}>go</button>
     <button onClick={() => setSpeed(360 * 15 * (Math.PI / 180))}>Reverse</button>
