@@ -6,9 +6,10 @@ import * as Utils from './Utils';
 import * as PIXI from 'pixi.js';
 import worldContext from './WorldContext';
 
+const DEGTORAD = 0.0174532925199432957;
 
 
-export function usePhysicsObject({ fixed = false, restitution = 0.1, friction = 0.5, density = 1, shape = 'box', category = null, data, width, height, x, y, initialForce, initialImpulse, bullet, radius }) {
+export function usePhysicsObject({ fixed = false, restitution = 0.1, friction = 0.5, density = 1, shape = 'box', category = null, data, width, height, x, y, initialForce, initialImpulse, bullet, radius, angle }) {
 
     const world = useContext(worldContext);
     const SCALE = world.scaleFactor;
@@ -20,8 +21,14 @@ export function usePhysicsObject({ fixed = false, restitution = 0.1, friction = 
         const fixDef = new b2FixtureDef;
         fixDef.shape = new b2PolygonShape;
         Object.assign(fixDef, { density, friction, restitution });
-        bodyDef.position.x = Utils.fromCanvasToPhysics(x, SCALE);
-        bodyDef.position.y = Utils.fromCanvasToPhysics(y, SCALE);
+        if (x) {
+            bodyDef.position.x = Utils.fromCanvasToPhysics(x, SCALE);
+        }
+
+        if (y) {
+            bodyDef.position.y = Utils.fromCanvasToPhysics(y, SCALE);
+        }
+
         const body = world.CreateBody(bodyDef);
         if (shape === "box") {
             fixDef.shape = new b2PolygonShape;
@@ -65,13 +72,23 @@ export function usePhysicsObject({ fixed = false, restitution = 0.1, friction = 
         if (fixed && physObjectRef.current) {
             //@ts-ignore
             physObjectRef.current.SetPositionXY(Utils.fromCanvasToPhysics(x, SCALE), Utils.fromCanvasToPhysics(y, SCALE));
+            /**
+             * @type {b2Body}
+             */
+            const body = physObjectRef.current;
+            if (angle) {
+                //@ts-ignore
+                body.SetAngle(angle * DEGTORAD);
+
+            }
+
         }
-    }, [x, y]);
+    }, [x, y, angle]);
 
     return { physObjectRef, hostRef };
 }
 
-function createTextureFromCanvas({ width, height, shape, radius, quality = 500, fill = "grey", stroke = "lime", strokeWidth = 0 }) {
+function createTextureFromCanvas({ width, height, shape = "box", radius, quality = 500, fill = "grey", stroke = "lime", strokeWidth = 0 }) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     console.log('canvinhjjh props', { fill, shape });
