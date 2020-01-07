@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/2d-game/static/css/main.5ecd60fb.chunk.css",
+    "main.js": "/2d-game/static/js/main.faf2064c.chunk.js",
+    "main.js.map": "/2d-game/static/js/main.faf2064c.chunk.js.map",
+    "runtime-main.js": "/2d-game/static/js/runtime-main.4f713fed.js",
+    "runtime-main.js.map": "/2d-game/static/js/runtime-main.4f713fed.js.map",
+    "static/js/2.e0a22475.chunk.js": "/2d-game/static/js/2.e0a22475.chunk.js",
+    "static/js/2.e0a22475.chunk.js.map": "/2d-game/static/js/2.e0a22475.chunk.js.map",
+    "index.html": "/2d-game/index.html",
+    "precache-manifest.8c6544ed310f13da2827a131e76a1cd2.js": "/2d-game/precache-manifest.8c6544ed310f13da2827a131e76a1cd2.js",
+    "service-worker.js": "/2d-game/service-worker.js",
+    "static/css/main.5ecd60fb.chunk.css.map": "/2d-game/static/css/main.5ecd60fb.chunk.css.map",
+    "static/js/2.e0a22475.chunk.js.LICENSE": "/2d-game/static/js/2.e0a22475.chunk.js.LICENSE",
+    "static/media/wheel.png": "/2d-game/static/media/wheel.347094cc.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4f713fed.js",
+    "static/js/2.e0a22475.chunk.js",
+    "static/css/main.5ecd60fb.chunk.css",
+    "static/js/main.faf2064c.chunk.js"
+  ]
+}
