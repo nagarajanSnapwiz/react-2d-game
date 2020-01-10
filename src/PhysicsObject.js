@@ -9,7 +9,7 @@ import worldContext from './WorldContext';
 const DEGTORAD = 0.0174532925199432957;
 
 
-export function usePhysicsObject({ fixed = false, restitution = 0.1, friction = 0.5, density = 1, shape = 'box', category = null, data, width, height, x, y, initialForce, initialImpulse, bullet, radius, angle }) {
+export function usePhysicsObject({ fixed = false, restitution = 0.1, friction = 0.5, density = 1, shape = 'box', category = null, data, width, height, x, y, initialForce, initialImpulse, bullet, radius, angle, acceleration }) {
 
     const world = useContext(worldContext);
     const SCALE = world.scaleFactor;
@@ -84,6 +84,19 @@ export function usePhysicsObject({ fixed = false, restitution = 0.1, friction = 
 
         }
     }, [x, y, angle]);
+
+    useEffect(() => {
+        /**
+             * @type {b2Body}
+             */
+        const body = physObjectRef.current;
+        if (acceleration) {
+            const { x = 0, y = 0 } = acceleration;
+            body.m_userData.acceleration = [x, y];
+        } else {
+            body.m_userData.acceleration = null;
+        }
+    }, [acceleration && acceleration.x, acceleration && acceleration.y])
 
     return { physObjectRef, hostRef };
 }

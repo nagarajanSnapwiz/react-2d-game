@@ -78,7 +78,7 @@ function Car() {
 export default function Game() {
 
   return (
-    <PhysicsWorld {...options}>
+    <PhysicsWorld {...options} >
       {/* <RevoluteJoint> */}
 
       {/* </RevoluteJoint> */}

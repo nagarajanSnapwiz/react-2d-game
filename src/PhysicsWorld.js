@@ -25,7 +25,7 @@ export function UsePhysicsWorld({ width, height, shape, gravity = { x: 0, y: 9.8
 
 
         //@ts-ignore
-        domRef.current.append(renderer.current.view);
+        domRef.current.appendChild(renderer.current.view);
         world.current.SetAllowSleeping(allowSleep);
         Utils.makeEnclosedBox(width, height, enclosureThickness, world.current, scaleFactor);
 
@@ -35,12 +35,6 @@ export function UsePhysicsWorld({ width, height, shape, gravity = { x: 0, y: 9.8
 
 
     Utils.useAnimationFrame(function (deltaTime) {
-        world.current.Step(
-            1 / 60,  //frame-rate (just hoping typical 60hz. in future, planning to use webworkers for uninterrupted physics simulation)
-            10,       //velocity iterations
-            10,       //position iterations
-        );
-        world.current.ClearForces();
         for (let b = world.current.m_bodyList; b; b = b.m_next) {
             if (!b.IsAwake()) {
                 continue;
@@ -49,10 +43,16 @@ export function UsePhysicsWorld({ width, height, shape, gravity = { x: 0, y: 9.8
             let userData = b.GetUserData();
 
             if (userData && userData.hostRef && userData.hostRef.current) {
+
                 if (userData.removed) {
                     world.current.DestroyBody(b);
                 } else {
+                    if (userData.acceleration) {
 
+                        const [x, y] = userData.acceleration;
+
+                        b.ApplyForce(new b2Vec2(x, y), b.GetWorldCenter(), true);
+                    }
                     let { x, y } = b.GetPosition();
                     let angle = b.GetAngle();
 
@@ -61,7 +61,12 @@ export function UsePhysicsWorld({ width, height, shape, gravity = { x: 0, y: 9.8
                 }
             }
         }
-
+        world.current.Step(
+            1 / 60,  //frame-rate (just hoping typical 60hz. in future, planning to use webworkers for uninterrupted physics simulation)
+            10,       //velocity iterations
+            10,       //position iterations
+        );
+        world.current.ClearForces();
 
         renderer.current.render(stage.current);
     });
